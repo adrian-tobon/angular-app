@@ -1,0 +1,47 @@
+<form (ngSubmit)="AddProduct()" #productForm="ngForm">
+
+    <div>
+        <input type="text" id="name" class="form-control my-2" placeholder="Enter name" name="name"
+            [(ngModel)]="product.name" #name="ngModel" required minlength="5">
+        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
+            <div *ngIf="name.errors?.['required']">
+                Name is required.
+            </div>
+            <div *ngIf="name.errors?.['minlength']">
+                Name must be at least 5 characters long.
+            </div>            
+        </div>
+    </div>
+    <div>
+        <input type="text" id="description" class="form-control my-2" placeholder="Enter description" name="description"
+            [(ngModel)]="product.description" #description="ngModel" required minlength="5">
+        <div *ngIf="description.invalid && (description.dirty || description.touched)" class="text-danger">
+            <div *ngIf="description.errors?.['required']">
+                Description is required.
+            </div>
+            <div *ngIf="description.errors?.['minlength']">
+                Description must be at least 5 characters long.
+            </div>
+        </div>
+    </div>
+    <div>
+        <input type="number" id="price" class="form-control my-2" placeholder="Enter price" name="price"
+            [(ngModel)]="product.price" #price="ngModel" required min="5">
+        <div *ngIf="price.invalid && (price.dirty || price.touched)" class="text-danger">
+            @if(price.errors?.['required']) {
+            <div>
+                Price is required and must be a positive number.
+            </div>
+            } @else if(price.errors?.['min']) {
+            <div>
+                Price must be at least 5.
+            </div>
+            }
+        </div>
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">{{product.id ? 'Update' : 'Add'}}
+            Product</button>
+        <button type="button" class="btn btn-success my-2 mx-1" (click)="cleanProduct()">Clean Product</button>
+    </div>
+</form>
